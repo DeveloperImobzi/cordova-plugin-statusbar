@@ -68,18 +68,19 @@ public class StatusBar extends CordovaPlugin {
                         | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                         | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                     );
-                    
+
                     // Handle window insets properly to prevent content overlap
                     View decorView = window.getDecorView();
                     decorView.setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
                         @Override
                         public WindowInsets onApplyWindowInsets(View v, WindowInsets insets) {
                             // Get system bar insets
-                            int systemBars = insets.getSystemWindowInsetTop();
-                            
-                            // Set padding to account for status bar
-                            v.setPadding(0, systemBars, 0, 0);
-                            
+                            int topInset = insets.getSystemWindowInsetTop();
+                            int bottomInset = insets.getSystemWindowInsetBottom();
+
+                            // Set padding to account for status and navigation bars
+                            v.setPadding(0, topInset, 0, bottomInset);
+
                             return insets;
                         }
                     });
